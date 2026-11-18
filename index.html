@@ -133,7 +133,7 @@ footer img{height:84px;width:auto}
 <section class="hero"><div class="wrap"><div class="txt reveal">
 <h1>Chemical reagents for <em>research and industry.</em></h1>
 <p>MOLHAWK is building a specialist store for laboratory chemicals: reagents, analytical and reference standards, building blocks, solvents and advanced materials. For research labs, quality control and manufacturers across Europe.</p>
-<form class="notify" id="nf"><input type="hidden" name="form" value="updates"><input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><label for="ne">Email address</label><input id="ne" name="email" type="email" required placeholder="Your work email" autocomplete="email"><button class="btn" type="submit">Get launch updates</button></form>
+<form class="notify" id="nf"><input type="hidden" name="form" value="Launch updates sign-up"><input type="hidden" name="_subject" value="MOLHAWK: launch updates sign-up"><input class="hp" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true"><label for="ne">Email address</label><input id="ne" name="email" type="email" required placeholder="Your work email" autocomplete="email"><button class="btn" type="submit">Get launch updates</button></form>
 <p class="ok" id="nerr" hidden>Sending failed. Please email us at <a href="mailto:contact@molhawk.com">contact@molhawk.com</a>.</p><p class="ok" id="nok" hidden>Thank you. We will email you when the store opens.</p>
 <a class="link" href="#access">Request early B2B access →</a>
 <div class="facts"><span>SDS & COA for every batch</span><span>Hazardous goods shipping</span><span>VAT invoice & pro-forma</span></div>
@@ -167,7 +167,7 @@ footer img{height:84px;width:auto}
 
 <section class="band" id="access" style="padding-top:0"><div class="wrap access">
 <div class="reveal"><h2>Request early B2B access</h2><p class="lead">Laboratories, universities and manufacturers can register before launch. Tell us what you buy and we will prepare your account and pricing.</p></div>
-<form class="big reveal" id="af"><input type="hidden" name="form" value="access"><input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+<form class="big reveal" id="af"><input type="hidden" name="form" value="Early B2B access request"><input type="hidden" name="_subject" value="MOLHAWK: early B2B access request"><input class="hp" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
 <div class="two"><label>Company or institution<input name="company" required autocomplete="organization"></label><label>Work email<input name="email" type="email" required autocomplete="email"></label></div>
 <div class="two"><label>Country<input name="country" autocomplete="country-name" placeholder="e.g. Poland"></label>
 <label>Main interest<select name="interest"><option>Reagents & solvents</option><option>Analytical & reference standards</option><option>Building blocks</option><option>Life science reagents</option><option>Advanced materials</option></select></label></div>
@@ -198,7 +198,7 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.targ
 document.querySelectorAll('.reveal').forEach(e=>{if(!e.closest('.hero'))io.observe(e)});
 /* forms */
 const send=(f,ok,err)=>$(f).addEventListener('submit',async e=>{e.preventDefault();const b=e.target.querySelector('button');b.disabled=true;$(ok).hidden=$(err).hidden=true;
-try{const r=await fetch('contact.php',{method:'POST',body:new FormData(e.target)});const j=await r.json();if(!j.ok)throw 0;$(ok).hidden=false;e.target.reset()}catch(_){$(err).hidden=false}b.disabled=false});
+try{const d=new FormData(e.target);d.append('_template','table');d.append('_captcha','false');const r=await fetch('https://formsubmit.co/ajax/contact@molhawk.com',{method:'POST',headers:{Accept:'application/json'},body:d});const j=await r.json();if(String(j.success)!=='true')throw 0;$(ok).hidden=false;e.target.reset()}catch(_){$(err).hidden=false}b.disabled=false});
 send('#nf','#nok','#nerr');send('#af','#aok','#aerr');
 /* 3D scene */
 const cv=$('#scene');

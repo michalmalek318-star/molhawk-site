@@ -1,7 +1,8 @@
 # MOLHAWK.com – coming soon
 
-Static page deployed to molhawk.com via Hostinger Git deploy.
+Static page hosted on GitHub Pages at www.molhawk.com (DNS at Hostinger).
 
 - `index.html` – page (Three.js r128 from cdnjs)
-- `contact.php` – sends both forms to contact@molhawk.com (needs PHP hosting)
+- Forms post to FormSubmit, which emails contact@molhawk.com
+- `CNAME` – custom domain for GitHub Pages
 - `img/` – logo, mark, favicon
