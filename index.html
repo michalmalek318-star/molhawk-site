@@ -232,7 +232,7 @@ const place=[['benzene',5.2,1.2,1,1.15],['complex',8.4,-2.4,-3,1],['ethanol',3,-
 const mols=place.map(([n,x,y,z,s])=>{const g=build(n);g.position.set(x,y,z);g.scale.setScalar(s);g.rotation.set(Math.random()*6,Math.random()*6,0);g.userData={vx:(Math.random()-.5)*.25,vy:.1+Math.random()*.2,y0:y,ph:Math.random()*6};S.add(g);return g});
 /* graphene sheet for the advanced materials section */
 const LY=-15.5,pts=[],cols=34,rows=22,a=.55;for(let j=0;j<rows;j++)for(let i=0;i<cols;i++)pts.push(new THREE.Vector3((i-cols/2)*a*1.732+(j%2?a*.866:0),0,(j-rows/2)*a*1.5));
-const im=new THREE.InstancedMesh(sph,mat(0x0E6E82,.3),pts.length);const d=new THREE.Object3D();
+const gm=mat(0x0E6E82,.3);gm.transparent=true;gm.opacity=0;const im=new THREE.InstancedMesh(sph,gm,pts.length);const d=new THREE.Object3D();
 const sheet=new THREE.Group();sheet.position.set(9,LY,-6);sheet.rotation.set(1.15,-.35,-.3);S.add(sheet);sheet.add(im);
 const lp=[];const idx=(i,j)=>pts[j*cols+i];for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){if(i<cols-1)lp.push(idx(i,j),idx(i+1,j));if(j<rows-1){lp.push(idx(i,j),idx(i,j+1));const kk=j%2?i+1:i-1;if(kk>=0&&kk<cols)lp.push(idx(i,j),idx(kk,j+1))}}
 const lg=new THREE.BufferGeometry().setFromPoints(lp);const lines=new THREE.LineSegments(lg,new THREE.LineBasicMaterial({color:0x6FA9B8,transparent:true,opacity:.55}));sheet.add(lines);
@@ -248,7 +248,7 @@ const target=-f*36;cy+=(target-cy)*.06;
 C.position.x+=(mx*1.8-C.position.x)*.04;C.position.y=cy-my*1.2;C.position.z=14-Math.sin(f*Math.PI)*2;C.lookAt(C.position.x*.3,cy,0);
 mols.forEach(g=>{const u=g.userData;g.rotation.x+=.0016+u.vy*.004;g.rotation.y+=.002+u.vx*.004;g.position.y=u.y0+Math.sin(t*.4+u.ph)*.35});
 for(let i=0;i<pts.length;i++){const p=pts[i];d.position.set(p.x,Math.sin(p.x*.5+t*.8)*.25+Math.cos(p.z*.6+t*.6)*.2,p.z);d.scale.setScalar(.16);d.updateMatrix();im.setMatrixAt(i,d.matrix)}im.instanceMatrix.needsUpdate=true;
-sheet.rotation.z=-.25+Math.sin(t*.15)*.05;
+sheet.rotation.z=-.25+Math.sin(t*.15)*.05;const sv=Math.min(1,Math.max(0,(-cy-7)/5));gm.opacity=sv;lines.material.opacity=sv*.55;sheet.visible=sv>0;
 R.render(S,C);if(!reduce)requestAnimationFrame(tick)};
 requestAnimationFrame(tick);if(reduce)addEventListener('scroll',()=>requestAnimationFrame(tick),{passive:true});
 }catch(err){cv.style.display='none'}}
